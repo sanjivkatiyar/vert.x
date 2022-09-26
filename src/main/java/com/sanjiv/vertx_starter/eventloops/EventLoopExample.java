@@ -18,6 +18,7 @@ public class EventLoopExample extends AbstractVerticle {
         .setMaxEventLoopExecuteTimeUnit(TimeUnit.MILLISECONDS)
         .setBlockedThreadCheckInterval(1)
         .setBlockedThreadCheckIntervalUnit(TimeUnit.SECONDS)
+        .setEventLoopPoolSize(2)
     );
     vertx.deployVerticle(EventLoopExample.class.getName(),
       new DeploymentOptions().setInstances(4));
