@@ -1,4 +1,4 @@
-package com.sanjiv.vertx_starter.verticles.worker;
+package com.sanjiv.vertx_starter.worker;
 
 import com.sanjiv.vertx_starter.verticles.MainVerticle;
 import com.sanjiv.vertx_starter.verticles.VerticleA;
@@ -25,8 +25,17 @@ public class WorkerExample extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
+    vertx.deployVerticle(WorkerVerticle.class.getName(),
+      new DeploymentOptions()
+        .setWorker(true)
+        .setWorkerPoolSize(1)
+        .setWorkerPoolName("my-worker-verticle"));
     LOG.debug("Start {}", getClass().getName());
     startPromise.complete();
+    executeBlockingCode();
+  }
+
+  private void executeBlockingCode() {
     vertx.executeBlocking(event -> {
       try{
         LOG.debug("Executing blocking code");
