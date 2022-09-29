@@ -30,7 +30,7 @@ class RequestVerticle extends AbstractVerticle{
     var eventBus = vertx.eventBus();
     String message = "Hello World!";
     LOG.debug("Sending message: " + message);
-    eventBus.request(ADDRESS, message, reply -> {
+    eventBus.<String>request(ADDRESS, message, reply -> {
       LOG.debug("Response: " + reply.result().body());
     });
   }
