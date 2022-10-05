@@ -38,10 +38,25 @@ public class TestJsonObject {
   }
 
   @Test
-  void JsonArrayCanBeMapped(){
+  void JsonArrayCanBeMapped() {
     JsonArray jsonArray = new JsonArray();
-    jsonArray.add(new JsonObject().put("1", "Sanjiv").put("2","Shreyas Katiyar"));
+    jsonArray.add(new JsonObject().put("1", "Sanjiv").put("2", "Shreyas Katiyar"));
     Assertions.assertEquals("[{\"1\":\"Sanjiv\",\"2\":\"Shreyas Katiyar\"}]", jsonArray.encode());
+
+  }
+
+  @Test
+  void canMapJavaObject(){
+
+    final Person person = new Person(1, "Sanjiv");
+    JsonObject jsonObject = JsonObject.mapFrom(person);
+
+    Assertions.assertEquals(person.getName(), jsonObject.getString("name"));
+    Assertions.assertEquals(person.getId(), jsonObject.getInteger("id"));
+
+    Person sanjiv = jsonObject.mapTo(Person.class);
+
+    Assertions.assertEquals(person.getName(), sanjiv.getName());
 
 
   }
